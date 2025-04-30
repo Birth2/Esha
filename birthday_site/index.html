@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Esha</title>
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: url("esha.jpg") no-repeat center center fixed;
+      background-size: cover;
+      z-index: -1;
+      opacity: 0;
+      animation: fadeBg 2.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeBg {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      color: white;
+      text-shadow: 1px 1px 4px #000;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .top-heading {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.2rem;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .bottom-container {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      width: 90%;
+      max-width: 600px;
+      z-index: 900;
+    }
+
+    .play-button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.25);
+      color: white;
+      border: none;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+
+    .message-box {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      transform: rotate(45deg);
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .top-heading {
+        font-size: 1.6rem;
+      }
+      .play-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="top-heading">Happy Birthday Esha 🤍🥳</h1>
+
+  <div class="bottom-container">
+    <button class="play-button" onclick="document.getElementById('birthday-audio').play()">
+      ▶️ Play Birthday Song
+    </button>
+    <div class="message-box">
+      <p>May all your wishes come true. May you gain prosperity, wisdom, and a healthy life.</p>
+      <p>— From your well-wisher</p>
+    </div>
+  </div>
+
+  <audio id="birthday-audio" autoplay playsinline>
+    <source src="Happy Birthday.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    window.addEventListener('load', () => {
+      const audio = document.getElementById('birthday-audio');
+      setTimeout(() => {
+        audio.play().catch(err => {
+          console.log("Autoplay blocked, use play button.");
+        });
+      }, 500);
+
+      const messageBox = document.querySelector('.message-box');
+      const boxRect = messageBox.getBoundingClientRect();
+      const numHearts = 30;
+
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+
+        const xOffset = Math.random() * boxRect.width;
+        heart.style.left = `${boxRect.left + xOffset}px`;
+        heart.style.top = `${boxRect.top + window.scrollY}px`;
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.width = heart.style.height = Math.random() * 15 + 10 + 'px';
+        document.body.appendChild(heart);
+      }
+    });
+  </script>
+</body>
+</html>
